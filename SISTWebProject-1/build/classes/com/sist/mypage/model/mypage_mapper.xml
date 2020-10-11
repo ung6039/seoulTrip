@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mypage.model.mypage_mapper">
+	
+	<!-- 리뷰정보 select 활동 피드 -->
+	
+	<!-- 프로필 내용 수정 -->
+	<select id="passwordCheck" resultType="MemberVO_u" parameterType="string">
+		SELECT * FROM member
+		WHERE memberId = #{id}
+	</select>
+	
+	<update id="update_profile"  parameterType="MemberVO_u">
+		UPDATE member SET
+		name = #{name},
+		addr1 = #{addr1},
+		email = #{email},
+		tel = #{tel},
+		selfInfo = #{selfInfo},
+		birth =#{birth}
+		WHERE memberId = #{memberId}
+	</update>
+	
+	<select id="reivewData" parameterType="hashmap" resultType="ReviewVO_u">
+		SELECT no,reviewno,title,regdate,expdate,likecount,content,num
+		FROM (SELECT no,reviewno,title,regdate,expdate,likecount,content,rownum as num
+		FROM (SELECT no,reviewno,title,regdate,expdate,likecount,content
+		FROM review
+		WHERE memberId= #{id}))
+		where num BETWEEN #{start} and #{end} 
+		ORDER by regdate DESC, expdate DESC
+	</select>
+	
+	<select id ="reviewCount" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM review
+		WHERE memberId= #{memberId}
+	</select>
+	
+	<select id="wishtList" parameterType="string" resultType="WishListVO_u">
+		SELECT *FROM wishlist
+		WHERE memberId=#{id}
+
+	</select>
+	
+	<select id="mypage_wishlist_totalPage" parameterType="string" resultType="int">
+		select CEIL(count(*)/5) FROM wishlist
+		where memberId = #{memberId}
+	</select>
+	
+	
+	<select id="getReviewData_image_profile" parameterType="int" resultType="string">
+		SELECT filepath FROM review_photo
+		where reviewno = #{reviewNo}
+	</select>
+	
+	<select id="mypage_getimage" resultType="string" parameterType="int">
+		SELECT tphoto from tourplace
+		WHERE no=#{no }
+	</select>
+	
+	<select id="festival_wishlist_image" parameterType="int" resultType="string">
+		SELECT fphoto from festival
+		WHERE no =#{no}
+	</select>
+	
+	<select id="restaurant_wishlist_image" parameterType="int" resultType="string">
+		SELECT rphoto FROM restaurant
+		WHERE no = #{no}
+	</select>
+	
+	<select id="BookingListData" parameterType="hashmap" resultType="BookingRestaurantVO_u">
+		SELECT bookingnumber,memberId,no,reservationdate,time,inwon,name,email,tel,num 
+		FROM (SELECT bookingnumber,memberId,no,reservationdate,time,inwon,name,email,tel,rownum as num 
+		FROM (SELECT bookingnumber,memberId,no,reservationdate,time,inwon,name,email,tel
+		FROM bookingrestaurant
+		WHERE memberId = #{id}
+		ORDER BY bookingnumber ))
+		WHERE num BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="bookingTotalPage" parameterType="string" resultType="int">
+		SELECT CEIL(COUNT(*)/5) FROM bookingrestaurant
+		WHERE memberId = #{memberId}
+	</select>
+	
+	<select id="restaurant_reservation_Data" parameterType="int" resultType="com.sist.reservation.model.RestaurantVO">
+		SELECT rname,rphoto,price FROM restaurant
+		where no = #{no}
+	</select>
+	
+	<select id="restaurant_review_score" parameterType="int" resultType="string">
+		SELECT CEIL(AVG(grade),1) FROM review
+		WHERE no=#{no} and type=2
+	</select>
+	
+	<delete id="reservation_del" parameterType="BookingRestaurantVO_u">
+	 	DELETE FROM bookingrestaurant
+	 	where memberid = #{memberId} and bookingnumber = #{bookingnumber}
+	</delete>
+	<select id="reviewTotalCount_mypage" parameterType="string" resultType="int">
+		SELECT CEIL(COUNT(*)/5) FROM review
+		WHERE memberId =#{id}
+	</select>
+	
+	<select id="reviewDetailData" parameterType="hashmap" resultType="ReviewVO_u">
+		SELECT reviewno,type,no,memberId,title,regdate,expdate,likecount,
+				groupId,groupStep,root,depth,content,grade,
+				(SELECT tname from TOURPLACE WHERE no= #{no}) as tname
+		FROM review
+		WHERE reviewno =#{reviewno}
+	</select>
+	
+	<update id="mypage_reviewUpdate" parameterType="ReviewVO_u">
+		UPDATE review SET
+		title = #{title},
+		content = #{content},
+		regdate = #{regdate}
+		WHERE reviewno = #{reviewno}
+	</update>
+	
+	<delete id ="mypage_wishlistDelete" parameterType="WishListVO_u">
+		DELETE FROM wishlist
+		WHERE memberId=#{memeberId} and no=#{no}
+	</delete>
+	
+</mapper>

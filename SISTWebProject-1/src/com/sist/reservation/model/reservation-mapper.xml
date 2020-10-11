@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.reservation.model.reservation-mapper">
+
+	<select id="restaurantData" resultType="RestaurantVO" parameterType="int">
+		SELECT * FROM restaurant WHERE no=#{no}
+	</select>
+	
+
+	<insert id="bookingInfoInsert" parameterType="ReservationVO"> 
+	  <selectKey keyProperty="bookingnumber" resultType="int" order="BEFORE">
+	   SELECT NVL(MAX(bookingnumber)+1,1)as bookingnumber FROM bookingrestaurant
+	  </selectKey>
+		INSERT INTO bookingrestaurant VALUES (
+		#{bookingnumber},#{memberid},#{no},#{reservationdate},#{time},#{inwon},#{name},#{email},#{tel})
+	</insert>
+	
+	<select id="recommendTag" parameterType="int" resultType="TagVO">
+		SELECT DISTINCT tagname,tagcode,rownum 
+		FROM (SELECT rno,tagname,RESTAURANTTAG.tagcode
+		FROM restauranttag,resttagmapper
+		WHERE restauranttag.tagcode=resttagmapper.tagcode)
+		WHERE rno=#{no} AND rownum=1
+	</select>
+	
+	<select id="getrestInfoTag" parameterType="int" resultType="RestaurantVO">
+		SELECT rno,tagcode,rname,rphoto,restaurant.no,rownum
+		FROM resttagmapper,restaurant
+		WHERE resttagmapper.rno=restaurant.no 
+		AND rownum&lt;=3 AND tagcode=#{tagcode} order by rno
+	</select>
+	
+	
+</mapper>

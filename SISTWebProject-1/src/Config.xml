@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.sist.main.dao.LoginVO" alias="LoginVO"/>
+		<typeAlias type="com.sist.category.model.FoodVO" alias="FoodVO"/>
+		<typeAlias type="com.sist.home.model.FestivalVO" alias="FestivalVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailReviewVO" alias="DetailReviewVO"/>
+    	<typeAlias type="com.sist.detail.dao.Detail_Review_PhotoVO" alias="Detail_Review_PhotoVO"/>
+    	<typeAlias type="com.sist.detail.dao.DetailPhotoVO" alias="DetailPhotoVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailTourplaceVO" alias="DetailTourplaceVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailRestaurantVO" alias="DetailRestaurantVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailFestivalVO" alias="DetailFestivalVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailQnaVO" alias="DetailQnaVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailRankingTourplaceVO" alias="DetailRankTourVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailRankingRestaurantVO" alias="DetailRankResVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailRankingFestivalVO" alias="DetailRankFestivalVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailReviewCountVO" alias="DetailReviewCountVO"/>
+		<typeAlias type="com.sist.detail.dao.Detail_Review_HashtagVO" alias="DetailReviewHashVO"/>
+		<typeAlias type="com.sist.detail.dao.DetailTagMappingVO" alias="DetailTagMappingVO"/>
+		
+    	<typeAlias type="com.sist.main.dao.HomeItemVO" alias="HomeItemVO"/>
+    	
+    	
+		<typeAlias type="com.sist.mypage.model.MemberVO_u" alias="MemberVO_u"/>
+		<typeAlias type="com.sist.mypage.model.ReviewVO_u" alias="ReviewVO_u"/>
+		<typeAlias type="com.sist.mypage.model.WishListVO_u" alias="WishListVO_u"/>
+		<typeAlias type="com.sist.mypage.model.PhotoVO_u" alias="PhotoVO_u"/>
+		<typeAlias type="com.sist.main.dao.HashTagVO" alias="HashTagVO"/>
+		<typeAlias type="com.sist.mypage.model.BookingRestaurantVO_u"/>
+		<typeAlias type="com.sist.member.model.MemberVO_c" alias="MemberVO_c"/>
+		<typeAlias type="com.sist.member.model.ZipcodeVO" alias="ZipcodeVO"/>
+		
+		<typeAlias type="com.sist.reservation.model.ReservationVO" alias="ReservationVO"/>
+		<typeAlias type="com.sist.reservation.model.MemberVO_r" alias="MemberVO_r"/>
+		<typeAlias type="com.sist.reservation.model.RestaurantVO" alias="RestaurantVO"/>
+		<typeAlias type="com.sist.reservation.model.TagVO" alias="TagVO"/>
+		<typeAlias type="com.sist.main.dao.ReviewReplyVO" alias="ReviewReplyVO"/>
+		<typeAlias type="com.sist.category.model.FoodTagDetailVO" alias="FoodTagDetailVO"/>
+		
+		<typeAlias type="com.sist.tourplace.model.TourplaceVO" alias="TourplaceVO"/>
+		<typeAlias type="com.sist.tourplace.model.TourplaceTagVO" alias="TourplaceTagVO"/>
+		<typeAlias type="com.sist.tourplace.model.TourplaceTagDetailVO" alias="TourplaceTagDetailVO"/>
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"></transactionManager>
+			
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:localhost:orcl"/>
+				<property name="username" value="hr"/>
+				<property name="password" value="happy"/>
+				<property name="poolMaximumActiveConnections" value="15"/>
+				<property name="poolMaximumIdleConnections" value="15"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="com/sist/mypage/model/mypage_mapper.xml"/>
+		<mapper resource="com/sist/main/dao/main-mapper.xml"/>
+		<mapper resource="com/sist/category/model/food-mapper.xml"/>
+		<mapper resource="com/sist/home/model/festival-mapper.xml"/>
+		<mapper resource="com/sist/detail/dao/detail-mapper.xml"/>
+		<mapper resource="com/sist/detail/dao/detailQna-mapper.xml"/>
+		<mapper resource="com/sist/member/model/member-mapper.xml"/>
+		<mapper resource="com/sist/reservation/model/reservation-mapper.xml"/>
+		<mapper resource="com/sist/tourplace/model/tourplace-mapper.xml"/>
+	</mappers>
+</configuration>
